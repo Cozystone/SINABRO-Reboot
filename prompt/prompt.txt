@@ -1,0 +1,357 @@
+❯ /* 피드 */
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+
+  position: relative;
+  width: 393px;
+  height: 852px;
+
+  background: #F7F7F9;
+  border-radius: 16px;
+
+
+  /* Status Bar - iPhone */
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 21px 0px 0px;
+
+  width: 393px;
+  height: 54px;
+
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+
+
+  /* Frame */
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px;
+  gap: 134px;
+
+  width: 393px;
+  height: 22px;
+
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+
+
+  /* Time */
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 6px 0px 16px;
+  gap: 10px;
+
+  margin: 0 auto;
+  width: 134.5px;
+  height: 22px;
+
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 1;
+
+
+  /* Time */
+
+  width: 37px;
+  height: 22px;
+
+  font-family: 'SF Pro';
+  font-style: normal;
+  font-weight: 590;
+  font-size: 17px;
+  line-height: 22px;
+  /* identical to box height, or 129% */
+  text-align: center;
+
+  color: #000000;
+
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+
+
+  /* Dynamic Island spacer */
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+
+  margin: 0 auto;
+  width: 124px;
+  height: 10px;
+
+
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+
+
+  /* Levels */
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 16px 0px 6px;
+  gap: 7px;
+
+  margin: 0 auto;
+  width: 134.5px;
+  height: 13px;
+
+
+  /* Inside auto layout */
+  flex: none;
+  order: 2;
+  flex-grow: 1;
+
+
+  /* Cellular Connection */
+
+  width: 19.2px;
+  height: 12.23px;
+
+  background: #000000;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+
+
+  /* Wifi */
+
+  width: 17.14px;
+  height: 12.33px;
+
+  background: #000000;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+
+
+  /* Battery */
+
+  width: 27.33px;
+  height: 13px;
+
+
+  /* Inside auto layout */
+  flex: none;
+  order: 2;
+  flex-grow: 0;
+
+
+  /* Border */
+
+  box-sizing: border-box;
+
+  position: absolute;
+  width: 25px;
+  left: calc(50% - 25px/2 + 19.01px);
+  top: 0%;
+  bottom: 0%;
+
+  mix-blend-mode: normal;
+  opacity: 0.35;
+  border: 1px solid #000000;
+  border-radius: 4.3px;
+
+
+  /* Cap */
+
+  position: absolute;
+  width: 1.33px;
+  left: calc(50% - 1.33px/2 + 33.17px);
+  top: 36.78%;
+  bottom: 31.87%;
+
+  background: #00
+  … +76332 lines …
+   법령에 따라 보존이 필요한 경우는 예외로 합니다. 4. 개인정보의 제3자 제공
+ 회사는 이용자의 개인정보를 외부에 제공하지
+   않으며, 제공이 필요한 경우 사전 동의를 구합니다. 5. 개인정보의 파기절차 및 방법 전자적 파일 형태는 복구 불가능한
+  방법으로 삭제합니다. 종이 문서 형태는 분쇄 또는 소각합니다. 6. 이용자의 권리
+ 이용자는 본인의 개인정보에 대해
+  언제든지 열람, 정정, 삭제, 처리 정지를 요청할 수 있습니다. 7. 개인정보 보호책임자 성명: [담당자명] 이메일:
+  [이메일주소] 문의 시 신속히 답변드리겠습니다. 8. 고지의 의무
+ 본 개인정보처리방침은 법령 또는 서비스 변경에 따라
+  내용이 변경될 수 있으며, 변경 시 [앱/웹 내 공지사항]을 통해 고지합니다. */
+
+  width: 358.88px;
+  height: 805.92px;
+
+  background: #000000;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+
+
+  /* Frame 83 */
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 0px 0px;
+  gap: 8px;
+
+  width: 393px;
+  height: 34px;
+
+  border-radius: 16px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 3;
+  align-self: stretch;
+  flex-grow: 0;
+
+
+  /* Home Indicator */
+
+  width: 393px;
+  height: 26px;
+
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+
+
+  /* Home Indicator */
+
+  position: absolute;
+  width: 144px;
+  height: 5px;
+  left: calc(50% - 144px/2 + 0.5px);
+  bottom: 8px;
+
+  background: #000000;
+  border-radius: 100px;
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+   이게 figma로 생성된 SINABRO의 UI야. 📌 SINABRO 통합 비전 프롬프트
+  1. 핵심 정의 (Core Identity)
+
+  SINABRO는 단순한 독서 SNS가 아니다.
+  이 플랫폼은 사용자의 “읽은 책”이 아니라,
+  👉 “사고 방식, 질문 수준, 가치관의 변화”를 기록하고 드러내는 지적 정체성 네트워크다.
+
+  사용자는 책을 소비하는 사람이 아니라
+  👉 “생각을 생산하는 사람”으로 존재한다.
+
+  2. 문제 정의 (Problem)
+
+  기존 독서 플랫폼 (Goodreads 등)은 다음 한계를 가진다:
+
+  읽었는지 / 별점 / 리뷰 → 표면적 데이터만 존재
+  사고 변화, 질문, 관점 충돌 → 기록되지 않음
+  사용자 간 상호작용 → 공감(좋아요) 중심, 깊이 없음
+  결과적으로 → 지적 수준이나 사고 구조가 드러나지 않음
+  3. 해결 방향 (Solution)
+
+  SINABRO는 3가지 축으로 문제를 해결한다:
+
+  ① Intellectual Status Network (지적 정체성 네트워크)
+
+  핵심 질문:
+  👉 “이 사람은 어떤 생각을 하는 인간인가?”
+
+  기능:
+  📘 “이 책에서 바뀐 생각” 피드
+  ❓ “내가 던진 질문” 기록
+  🔥 “논쟁 기반 댓글 시스템”
+  좋아요 ❌
+  반박 / 확장 / 재해석 ⭕
+  🧠 독서 수준 레벨링
+  철학 / 문학 / 과학 / 사유 깊이 기반
+  구조:
+  사용자는 책이 아니라
+  👉 “자신의 사고 패턴”을 전시한다
+  ② AI Taste Builder (지적 성장 설계 시스템)
+
+  기존 추천:
+  → “비슷한 책 추천”
+
+  SINABRO:
+  → “너를 깨뜨리는 책 추천”
+
+  AI 역할:
+  🧩 사고 패턴 분석
+  ⚠️ 편향 탐지
+  🔄 반대 관점 주입
+  예시:
+  “너는 효율 중심 사고가 강함 → 인간성/철학 부족”
+  “이 책은 너의 가치관과 충돌함 → 읽어야 함”
+  핵심:
+
+  👉 추천이 아니라
+  👉 “지적 성장 경로 설계”
+
+  ③ Literary Social Layer (문학 기반 SNS 경험)
+
+  SINABRO는 기존 SNS 구조를 가져오되
+  문학적으로 재해석한다
+
+  기능:
+  📱 피드 (생각 중심)
+  🔍 Explore (장르 기반 탐색)
+  🎭 감정 기반 리액션 (단순 좋아요 확장)
+  🧾 짧은 글 / 긴 글 모두 가능
+  중요한 규칙:
+  모든 콘텐츠는 문학/사고 기반
+  광고, 잡담, 일반 SNS 요소 → 배제
+  4. UX 철학 (Critical Design Philosophy)
+
+  SINABRO는 다음을 절대적으로 지향한다:
+
+  ❌ 금지:
+  가벼운 공감 중심 구조
+  “좋아요 수” 기반 평가
+  단순 리뷰 플랫폼화
+  ⭕ 지향:
+  긴장감 있는 상호작용
+  지적 충돌
+  사고의 깊이가 드러나는 구조
+
+  👉 “편한 SNS”가 아니라
+  👉 “생각하게 만드는 공간” 이 비전 프롬프트를 참고해서 제작해줘. vercel로 임시배포할거야. 지금은
+  https://sinabro-webview.vercel.app/ 여기에 배포되어있는데, 이걸 덮어쓰자
