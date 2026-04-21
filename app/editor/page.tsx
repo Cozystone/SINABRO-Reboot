@@ -8,23 +8,14 @@ import { StatusBar } from "@/components/status-bar";
 import { BottomNav } from "@/components/bottom-nav";
 import { BackIcon, CheckIcon } from "@/components/icons";
 
-const defaultBody = `김승옥의 『무진기행』은 주인공 윤희중이 고향 무진을 다시 찾아가며 겪는 며칠간의 여정을 담은 작품이다.
-무진이라는 공간은 단지 고향이라는 의미를 넘어, 윤희중에게는 현실과는 다른 감정과 기억, 그리고 스스로를 돌아볼 수 있는 기회의 공간으로 그려진다.
-작품을 읽으며 가장 인상 깊었던 부분은 마지막에 주인공이 무진을 떠나는 장면이었다.
-
-"쓰고 나서 나는 그 편지를 읽어봤다.
-또 한 번 읽어봤다. 그리고 찢어 버렸다.
-
-덜컹거리며 달리는 버스 속에서 나는, 어디쯤에선가,
-길가에 세워진 하얀 팻말을 보았다."
-
-나는 심한 부끄러움을 느꼈다.`;
-
 type Format = "bold" | "italic" | "underline" | "list";
 
 export default function EditorPage() {
   const router = useRouter();
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
   const [active, setActive] = useState<Set<Format>>(new Set());
+  const [saving, setSaving] = useState(false);
 
   function toggle(fmt: Format) {
     setActive((prev) => {
@@ -35,8 +26,16 @@ export default function EditorPage() {
   }
 
   function handleSave() {
-    router.push("/feed");
+    if (!title.trim() && !body.trim()) return;
+    setSaving(true);
+    // 실제 서비스에서는 API 호출 후 피드로 이동
+    setTimeout(() => {
+      router.push("/feed");
+    }, 300);
   }
+
+  const charCount = body.length;
+  const canSave = title.trim().length > 0 || body.trim().length > 0;
 
   return (
     <AppFrame>
@@ -47,44 +46,49 @@ export default function EditorPage() {
             <Link href="/feed" className="ibtn" aria-label="뒤로">
               <BackIcon />
             </Link>
-            <button type="button" className="ibtn" aria-label="저장" onClick={handleSave}>
-              <CheckIcon />
-            </button>
+            <div className="editor-topbar-right">
+              <span className="editor-char-count">{charCount > 0 ? `${charCount}자` : ""}</span>
+              <button
+                type="button"
+                className={`ibtn editor-save-btn${canSave ? " editor-save-btn--active" : ""}`}
+                aria-label="발행"
+                onClick={handleSave}
+                disabled={!canSave || saving}
+              >
+                <CheckIcon />
+              </button>
+            </div>
           </div>
           <input
             className="editor-title"
-            defaultValue="『무진기행』 감상문"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             placeholder="제목을 입력하세요"
+            maxLength={100}
           />
           <div className="editor-toolbar" aria-label="서식 도구">
-            <button
-              type="button"
-              className={active.has("bold") ? "active" : ""}
-              onClick={() => toggle("bold")}
-            ><strong>B</strong></button>
-            <button
-              type="button"
-              className={active.has("italic") ? "active" : ""}
-              onClick={() => toggle("italic")}
-            ><em>I</em></button>
-            <button
-              type="button"
-              className={active.has("underline") ? "active" : ""}
-              onClick={() => toggle("underline")}
-            >T̲</button>
-            <button
-              type="button"
-              className={active.has("list") ? "active" : ""}
-              onClick={() => toggle("list")}
-            >≣</button>
+            <button type="button" className={active.has("bold") ? "active" : ""} onClick={() => toggle("bold")}>
+              <strong>B</strong>
+            </button>
+            <button type="button" className={active.has("italic") ? "active" : ""} onClick={() => toggle("italic")}>
+              <em>I</em>
+            </button>
+            <button type="button" className={active.has("underline") ? "active" : ""} onClick={() => toggle("underline")}>
+              T̲
+            </button>
+            <button type="button" className={active.has("list") ? "active" : ""} onClick={() => toggle("list")}>
+              ≣
+            </button>
           </div>
         </div>
 
         <div className="screen-body">
           <textarea
             className="editor-body"
-            defaultValue={defaultBody}
-            placeholder="오늘의 생각을 기록하세요..."
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
+            placeholder="오늘의 이야기를 써내려가세요..."
+            autoFocus
           />
         </div>
 

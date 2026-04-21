@@ -112,11 +112,9 @@ function EditModal({ profile, onSave, onClose }: {
   onClose: () => void;
 }) {
   const [form, setForm] = useState(profile);
-
   function set(k: keyof Profile, v: string) {
     setForm((prev) => ({ ...prev, [k]: v }));
   }
-
   return (
     <div className="umodal-overlay" onClick={onClose}>
       <div className="umodal" onClick={(e) => e.stopPropagation()}>
@@ -134,43 +132,21 @@ function EditModal({ profile, onSave, onClose }: {
           </div>
         </div>
         <div className="umodal-list" style={{ padding: "12px 16px 32px" }}>
-          {/* Avatar */}
           <div className="edit-av-row">
-            <div className="profile-av" />
+            <div className="profile-av profile-av--lg" />
             <button type="button" className="edit-av-btn">사진 변경</button>
           </div>
-
-          {/* Fields */}
           <div className="edit-field">
             <label className="edit-label">이름</label>
-            <input
-              className="edit-input"
-              value={form.name}
-              onChange={(e) => set("name", e.target.value)}
-              placeholder="이름"
-              maxLength={30}
-            />
+            <input className="edit-input" value={form.name} onChange={(e) => set("name", e.target.value)} placeholder="이름" maxLength={30} />
           </div>
           <div className="edit-field">
             <label className="edit-label">핸들</label>
-            <input
-              className="edit-input"
-              value={form.handle}
-              onChange={(e) => set("handle", e.target.value)}
-              placeholder="@handle"
-              maxLength={30}
-            />
+            <input className="edit-input" value={form.handle} onChange={(e) => set("handle", e.target.value)} placeholder="@handle" maxLength={30} />
           </div>
           <div className="edit-field">
             <label className="edit-label">소개</label>
-            <textarea
-              className="edit-input edit-textarea"
-              value={form.bio}
-              onChange={(e) => set("bio", e.target.value)}
-              placeholder="나를 한 줄로 소개해보세요"
-              maxLength={150}
-              rows={3}
-            />
+            <textarea className="edit-input edit-textarea" value={form.bio} onChange={(e) => set("bio", e.target.value)} placeholder="나를 한 줄로 소개해보세요" maxLength={150} rows={3} />
             <p className="edit-counter">{form.bio.length}/150</p>
           </div>
         </div>
@@ -183,12 +159,6 @@ export default function ProfilePage() {
   const router = useRouter();
   const [modal, setModal] = useState<ModalType>(null);
   const [profile, setProfile] = useState(initialProfile);
-
-  const stats = [
-    { label: "팔로잉", value: "6명",   key: "following" as ModalType },
-    { label: "팔로워", value: "6명",   key: "followers" as ModalType },
-    { label: "게시글", value: "158개", key: null },
-  ];
 
   return (
     <AppFrame>
@@ -205,31 +175,42 @@ export default function ProfilePage() {
 
         <div className="screen-body">
           <section className="profile-hero">
-            <div className="profile-row">
-              <div className="profile-av" />
-              <div>
-                <h1 className="profile-name">{profile.name}</h1>
-                <p className="profile-handle">{profile.handle}</p>
-                <ul className="profile-stats">
-                  {stats.map(({ label, value, key }) => (
-                    <li key={label}>
-                      <button
-                        type="button"
-                        className="stat-btn"
-                        onClick={() => key && setModal(key)}
-                        style={key ? undefined : { cursor: "default" }}
-                      >
-                        <p className="stat__value">{value}</p>
-                        <p className="stat__label">{label}</p>
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            {/* Instagram-style: avatar left, 3 stats right */}
+            <div className="profile-top">
+              <div className="profile-av profile-av--lg" />
+              <ul className="profile-stats">
+                {[
+                  { label: "게시글", value: 158, key: null as ModalType },
+                  { label: "팔로워", value: 6,   key: "followers" as ModalType },
+                  { label: "팔로잉", value: 6,   key: "following" as ModalType },
+                ].map(({ label, value, key }) => (
+                  <li key={label}>
+                    <button
+                      type="button"
+                      className="stat-btn"
+                      onClick={() => key && setModal(key)}
+                      disabled={!key}
+                    >
+                      <span className="stat__value">{value}</span>
+                      <span className="stat__label">{label}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <p className="profile-bio" style={{ whiteSpace: "pre-line" }}>{profile.bio}</p>
+
+            {/* Name, handle, bio */}
+            <div className="profile-info">
+              <h1 className="profile-name">{profile.name}</h1>
+              <p className="profile-handle">{profile.handle}</p>
+              <p className="profile-bio" style={{ whiteSpace: "pre-line" }}>{profile.bio}</p>
+            </div>
+
+            {/* Action buttons — side by side */}
             <div className="profile-btns">
-              <Link href="/my-posts" className="btn-profile-edit">나의 글 보기</Link>
+              <Link href="/my-posts" className="btn-profile-edit btn-profile-edit--outline">
+                나의 글 보기
+              </Link>
               <button
                 type="button"
                 className="btn-profile-edit btn-profile-edit--outline"
@@ -254,11 +235,7 @@ export default function ProfilePage() {
           <UserModal title="팔로워" list={followerList} onClose={() => setModal(null)} />
         )}
         {modal === "edit" && (
-          <EditModal
-            profile={profile}
-            onSave={(p) => setProfile(p)}
-            onClose={() => setModal(null)}
-          />
+          <EditModal profile={profile} onSave={(p) => setProfile(p)} onClose={() => setModal(null)} />
         )}
       </div>
     </AppFrame>
