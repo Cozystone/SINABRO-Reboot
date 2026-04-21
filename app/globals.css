@@ -28,15 +28,15 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-/* ── Dark mode overrides ── */
+/* ── Dark mode overrides (colors verified against Figma) ── */
 html.dark {
-  --c-bg:     #111111;
-  --c-card:   #1c1c1e;
-  --c-text:   #f0ede8;
-  --c-dim:    #9b9b9b;
-  --c-muted:  #666666;
-  --c-btn:    #2a2a2a;
-  --c-sep:    #3a3a3c;
+  --c-bg:     #1e1e1e;  /* Figma: rgb(30,30,30) */
+  --c-card:   #2e2e2e;  /* Figma: rgb(46,46,46) — nav/card bg */
+  --c-text:   #f0ede8;  /* warm white for reading comfort */
+  --c-dim:    #a0a0a0;
+  --c-muted:  #686868;
+  --c-btn:    #272727;  /* Figma: rgb(39,39,39) — viewer bar */
+  --c-sep:    #444444;
   --c-border: rgba(255,255,255,0.09);
   --c-dark:   #f0ede8;
 }
@@ -539,7 +539,7 @@ button { font: inherit; cursor: pointer; border: 0; padding: 0; background: tran
   width: 3px;
   height: 3px;
   border-radius: 50%;
-  background: #999;
+  background: var(--c-dim);
   display: block;
 }
 
@@ -596,7 +596,7 @@ button { font: inherit; cursor: pointer; border: 0; padding: 0; background: tran
 
 .card__heart { font-size: 1rem; line-height: 1; }
 .card__heart.is-liked { color: var(--c-heart); }
-.card__heart:not(.is-liked) { color: #aaa; }
+.card__heart:not(.is-liked) { color: var(--c-dim); }
 .card__cnt { font-size: 0.88rem; }
 
 /* ── Search ── */
@@ -990,7 +990,7 @@ button { font: inherit; cursor: pointer; border: 0; padding: 0; background: tran
   justify-content: center;
   width: 24px;
   height: 24px;
-  color: #757576;
+  color: var(--c-dim);
   transition: color 0.1s;
 }
 

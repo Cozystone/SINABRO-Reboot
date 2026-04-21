@@ -6,6 +6,7 @@ import { AppFrame } from "@/components/app-frame";
 import { StatusBar } from "@/components/status-bar";
 import { BottomNav } from "@/components/bottom-nav";
 import { PostCard } from "@/components/post-card";
+import { useTheme } from "@/components/theme-provider";
 
 const posts = [
   {
@@ -37,6 +38,7 @@ const posts = [
 const sheetItems = ["공유하기", "관심 없음", "피드 신고하기"];
 
 export default function FeedPage() {
+  const { theme } = useTheme();
   const [sheetPost, setSheetPost] = useState<string | null>(null);
 
   return (
@@ -45,7 +47,13 @@ export default function FeedPage() {
         <div className="screen-head">
           <StatusBar />
           <header className="feed-top">
-            <Image src="/sinabro_logo_color.svg" alt="SINABRO" width={99} height={21} priority />
+            <Image
+              src={theme === "dark" ? "/sinabro_logo_white.svg" : "/sinabro_logo_color.svg"}
+              alt="SINABRO"
+              width={99}
+              height={21}
+              priority
+            />
           </header>
         </div>
 

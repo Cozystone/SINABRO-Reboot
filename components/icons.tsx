@@ -40,21 +40,20 @@ export function BellIcon({ active = false }: { active?: boolean }) {
 }
 
 /* ── Actions ── */
-export function BackIcon({ dark = false }: { dark?: boolean }) {
+export function BackIcon({ dark: _dark = false }: { dark?: boolean }) {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M15 5.5L8.5 12 15 18.5" stroke={dark ? "#f4f4f4" : "#1a1a1a"} strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M15 5.5L8.5 12 15 18.5" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
-export function MoreIcon({ dark = false }: { dark?: boolean }) {
-  const f = dark ? "#f4f4f4" : "#1a1a1a";
+export function MoreIcon({ dark: _dark = false }: { dark?: boolean }) {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <circle cx="5.5" cy="12" r="1.4" fill={f} />
-      <circle cx="12" cy="12" r="1.4" fill={f} />
-      <circle cx="18.5" cy="12" r="1.4" fill={f} />
+      <circle cx="5.5" cy="12" r="1.4" fill="currentColor" />
+      <circle cx="12" cy="12" r="1.4" fill="currentColor" />
+      <circle cx="18.5" cy="12" r="1.4" fill="currentColor" />
     </svg>
   );
 }
@@ -62,16 +61,15 @@ export function MoreIcon({ dark = false }: { dark?: boolean }) {
 export function CheckIcon() {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M5 12.5L9.5 17 19 7" stroke="#1a1a1a" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M5 12.5L9.5 17 19 7" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
-export function PlusIcon({ dark = false }: { dark?: boolean }) {
-  const c = dark ? "#f4f4f4" : "#1a1a1a";
+export function PlusIcon({ dark: _dark = false }: { dark?: boolean }) {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M12 5v14M5 12h14" stroke={c} strokeWidth="2.1" strokeLinecap="round" />
+      <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" />
     </svg>
   );
 }
@@ -79,8 +77,8 @@ export function PlusIcon({ dark = false }: { dark?: boolean }) {
 export function SearchIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <circle cx="10.5" cy="10.5" r="5.5" stroke="#888" strokeWidth="1.8" />
-      <path d="M15 15 19.5 19.5" stroke="#888" strokeWidth="1.8" strokeLinecap="round" />
+      <circle cx="10.5" cy="10.5" r="5.5" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M15 15 19.5 19.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
     </svg>
   );
 }
@@ -91,7 +89,7 @@ export function HeartIcon({ filled = false }: { filled?: boolean }) {
       <path
         d="M12 20L5.2 13.4C3.4 11.7 3.4 8.9 5.2 7.2 6.7 5.8 9.1 5.8 10.6 7.2L12 8.6l1.4-1.4c1.5-1.4 3.9-1.4 5.4 0 1.8 1.7 1.8 4.5 0 6.2L12 20z"
         fill={filled ? "#ef2b2b" : "none"}
-        stroke={filled ? "#ef2b2b" : "#666"}
+        stroke={filled ? "#ef2b2b" : "currentColor"}
         strokeWidth="1.7"
         strokeLinejoin="round"
       />
@@ -102,7 +100,7 @@ export function HeartIcon({ filled = false }: { filled?: boolean }) {
 export function ChatIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10z" stroke="#666" strokeWidth="1.7" strokeLinejoin="round" />
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -110,8 +108,8 @@ export function ChatIcon() {
 export function SunIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="4" stroke="#666" strokeWidth="1.7" />
-      <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="#666" strokeWidth="1.7" strokeLinecap="round" />
+      <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.7" />
+      <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
     </svg>
   );
 }
@@ -119,8 +117,8 @@ export function SunIcon() {
 export function SettingsIcon() {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="2.8" stroke="#1a1a1a" strokeWidth="1.7" />
-      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" stroke="#1a1a1a" strokeWidth="1.7" />
+      <circle cx="12" cy="12" r="2.8" stroke="currentColor" strokeWidth="1.7" />
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" stroke="currentColor" strokeWidth="1.7" />
     </svg>
   );
 }
@@ -128,8 +126,8 @@ export function SettingsIcon() {
 export function PencilIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="#757576" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="#757576" strokeWidth="1.8" strokeLinejoin="round" />
+      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -137,7 +135,7 @@ export function PencilIcon() {
 export function XMarkIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-      <path d="M18 6 6 18M6 6l12 12" stroke="#757576" strokeWidth="1.9" strokeLinecap="round" />
+      <path d="M18 6 6 18M6 6l12 12" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
     </svg>
   );
 }
