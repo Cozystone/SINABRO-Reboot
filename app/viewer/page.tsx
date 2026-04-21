@@ -17,11 +17,14 @@ const paragraphs = [
 ];
 
 const fontSizes = ["0.88rem", "1rem", "1.12rem"];
+const moreItems = ["공유하기", "저장하기", "신고하기"];
 
 export default function ViewerPage() {
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(158);
   const [fsIdx, setFsIdx] = useState(1);
+  const [bright, setBright] = useState(false);
+  const [sheetOpen, setSheetOpen] = useState(false);
 
   function toggleLike() {
     setLiked((v) => !v);
@@ -37,13 +40,13 @@ export default function ViewerPage() {
             <Link href="/feed" className="ibtn" aria-label="뒤로">
               <BackIcon />
             </Link>
-            <button type="button" className="ibtn" aria-label="더보기">
+            <button type="button" className="ibtn" aria-label="더보기" onClick={() => setSheetOpen(true)}>
               <MoreIcon />
             </button>
           </div>
         </div>
 
-        <div className="screen-body">
+        <div className="screen-body" style={bright ? { filter: "brightness(1.15)" } : undefined}>
           <div className="viewer-head">
             <h1 className="viewer-h1">『무진기행』 감상문</h1>
             <span className="viewer-author">홍길동</span>
@@ -95,11 +98,39 @@ export default function ViewerPage() {
               </button>
             </div>
             {/* 밝기 */}
-            <button type="button" className="vbtn" aria-label="밝기 조절">
+            <button
+              type="button"
+              className={`vbtn${bright ? " vbtn--liked" : ""}`}
+              aria-label="밝기 조절"
+              onClick={() => setBright((v) => !v)}
+            >
               <SunIcon />
             </button>
           </div>
         </div>
+
+        {/* 더보기 시트 */}
+        {sheetOpen && (
+          <div className="sheet-overlay" onClick={() => setSheetOpen(false)}>
+            <div className="sheet" onClick={(e) => e.stopPropagation()}>
+              <div className="sheet-handle" />
+              <ul className="sheet-list">
+                {moreItems.map((item, i) => (
+                  <li key={item}>
+                    <button
+                      type="button"
+                      className="sheet-item"
+                      style={i > 0 ? { borderTop: "1px solid var(--c-border)" } : undefined}
+                      onClick={() => setSheetOpen(false)}
+                    >
+                      {item}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
       </div>
     </AppFrame>
   );

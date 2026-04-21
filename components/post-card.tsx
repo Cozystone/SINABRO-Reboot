@@ -9,9 +9,10 @@ type PostCardProps = {
   body: string;
   likes: number;
   href?: string;
+  onMore?: () => void;
 };
 
-export function PostCard({ title, author, handle, body, likes, href = "/viewer" }: PostCardProps) {
+export function PostCard({ title, author, handle, body, likes, href = "/viewer", onMore }: PostCardProps) {
   return (
     <Link href={href} style={{ display: "block" }}>
       <article className="card">
@@ -21,7 +22,12 @@ export function PostCard({ title, author, handle, body, likes, href = "/viewer" 
             <p className="card__name">{author}</p>
             <p className="card__handle">{handle}</p>
           </div>
-          <button className="card__dots" type="button" aria-label="더보기" onClick={(e) => e.preventDefault()}>
+          <button
+            className="card__dots"
+            type="button"
+            aria-label="더보기"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); onMore?.(); }}
+          >
             <span /><span /><span />
           </button>
         </header>

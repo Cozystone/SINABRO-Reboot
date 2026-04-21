@@ -57,9 +57,14 @@ export default function ProfilePage() {
             읽는 것과 쓰는 것 사이 어딘가에서 삽니다.<br />
             좋아하는 작가: 김승옥, 이상, 박완서.
           </p>
-          <Link href="/my-posts" className="btn-profile-edit">
-            나의 글 보기
-          </Link>
+          <div className="profile-btns">
+            <Link href="/my-posts" className="btn-profile-edit">
+              나의 글 보기
+            </Link>
+            <button type="button" className="btn-profile-edit" style={{ marginTop: 8, background: "#000" }}>
+              프로필 편집
+            </button>
+          </div>
         </section>
 
         <div className="profile-posts">

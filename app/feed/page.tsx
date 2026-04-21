@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import { AppFrame } from "@/components/app-frame";
 import { StatusBar } from "@/components/status-bar";
@@ -31,7 +34,11 @@ const posts = [
   },
 ];
 
+const sheetItems = ["공유하기", "관심 없음", "피드 신고하기"];
+
 export default function FeedPage() {
+  const [sheetPost, setSheetPost] = useState<string | null>(null);
+
   return (
     <AppFrame>
       <div className="screen">
@@ -45,12 +52,34 @@ export default function FeedPage() {
         <div className="screen-body">
           <div className="feed-list">
             {posts.map((p) => (
-              <PostCard key={p.id} {...p} />
+              <PostCard key={p.id} {...p} onMore={() => setSheetPost(p.id)} />
             ))}
           </div>
         </div>
 
         <BottomNav current="feed" />
+
+        {sheetPost && (
+          <div className="sheet-overlay" onClick={() => setSheetPost(null)}>
+            <div className="sheet" onClick={(e) => e.stopPropagation()}>
+              <div className="sheet-handle" />
+              <ul className="sheet-list">
+                {sheetItems.map((item, i) => (
+                  <li key={item}>
+                    <button
+                      type="button"
+                      className="sheet-item"
+                      style={i > 0 ? { borderTop: "1px solid var(--c-border)" } : undefined}
+                      onClick={() => setSheetPost(null)}
+                    >
+                      {item}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
       </div>
     </AppFrame>
   );
