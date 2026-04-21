@@ -1,13 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { AppFrame } from "@/components/app-frame";
 import { StatusBar } from "@/components/status-bar";
 import { BottomNav } from "@/components/bottom-nav";
 import { PostCard } from "@/components/post-card";
 import { BackIcon, SettingsIcon, SearchIcon } from "@/components/icons";
+
+const initialProfile = {
+  name: "홍길동",
+  handle: "@user-123",
+  bio: "읽는 것과 쓰는 것 사이 어딘가에서 삽니다.\n좋아하는 작가: 김승옥, 이상, 박완서.",
+};
 
 const posts = [
   {
@@ -39,7 +45,7 @@ const followerList = [
 ];
 
 type UserItem = typeof followingList[0];
-type ModalType = "following" | "followers" | null;
+type ModalType = "following" | "followers" | "edit" | null;
 
 function UserRow({ name, handle, following: initFollowing }: UserItem) {
   const [following, setFollowing] = useState(initFollowing);
@@ -61,31 +67,20 @@ function UserRow({ name, handle, following: initFollowing }: UserItem) {
   );
 }
 
-function UserModal({
-  title,
-  list,
-  onClose,
-}: {
-  title: string;
-  list: UserItem[];
-  onClose: () => void;
-}) {
+function UserModal({ title, list, onClose }: { title: string; list: UserItem[]; onClose: () => void }) {
   const [query, setQuery] = useState("");
   const filtered = list.filter(
-    (u) =>
-      u.name.includes(query) || u.handle.toLowerCase().includes(query.toLowerCase())
+    (u) => u.name.includes(query) || u.handle.toLowerCase().includes(query.toLowerCase())
   );
   return (
     <div className="umodal-overlay" onClick={onClose}>
       <div className="umodal" onClick={(e) => e.stopPropagation()}>
-        {/* Header */}
         <div className="umodal-head">
           <div className="sheet-handle" />
           <div className="umodal-title-row">
             <span className="umodal-title">{title}</span>
             <button type="button" className="umodal-close" onClick={onClose} aria-label="닫기">✕</button>
           </div>
-          {/* Search */}
           <div className="search-bar" style={{ margin: "0 16px 12px" }}>
             <SearchIcon />
             <input
@@ -97,7 +92,6 @@ function UserModal({
             />
           </div>
         </div>
-        {/* List */}
         <div className="umodal-list">
           {filtered.length === 0 ? (
             <p className="search-empty" style={{ paddingTop: 32 }}>검색 결과가 없습니다.</p>
@@ -110,13 +104,89 @@ function UserModal({
   );
 }
 
+type Profile = typeof initialProfile;
+
+function EditModal({ profile, onSave, onClose }: {
+  profile: Profile;
+  onSave: (p: Profile) => void;
+  onClose: () => void;
+}) {
+  const [form, setForm] = useState(profile);
+
+  function set(k: keyof Profile, v: string) {
+    setForm((prev) => ({ ...prev, [k]: v }));
+  }
+
+  return (
+    <div className="umodal-overlay" onClick={onClose}>
+      <div className="umodal" onClick={(e) => e.stopPropagation()}>
+        <div className="umodal-head">
+          <div className="sheet-handle" />
+          <div className="umodal-title-row">
+            <button type="button" className="umodal-close" style={{ left: 12, right: "auto" }} onClick={onClose}>취소</button>
+            <span className="umodal-title">프로필 편집</span>
+            <button
+              type="button"
+              className="umodal-close"
+              style={{ fontWeight: 700, color: "var(--c-accent)" }}
+              onClick={() => { onSave(form); onClose(); }}
+            >완료</button>
+          </div>
+        </div>
+        <div className="umodal-list" style={{ padding: "12px 16px 32px" }}>
+          {/* Avatar */}
+          <div className="edit-av-row">
+            <div className="profile-av" />
+            <button type="button" className="edit-av-btn">사진 변경</button>
+          </div>
+
+          {/* Fields */}
+          <div className="edit-field">
+            <label className="edit-label">이름</label>
+            <input
+              className="edit-input"
+              value={form.name}
+              onChange={(e) => set("name", e.target.value)}
+              placeholder="이름"
+              maxLength={30}
+            />
+          </div>
+          <div className="edit-field">
+            <label className="edit-label">핸들</label>
+            <input
+              className="edit-input"
+              value={form.handle}
+              onChange={(e) => set("handle", e.target.value)}
+              placeholder="@handle"
+              maxLength={30}
+            />
+          </div>
+          <div className="edit-field">
+            <label className="edit-label">소개</label>
+            <textarea
+              className="edit-input edit-textarea"
+              value={form.bio}
+              onChange={(e) => set("bio", e.target.value)}
+              placeholder="나를 한 줄로 소개해보세요"
+              maxLength={150}
+              rows={3}
+            />
+            <p className="edit-counter">{form.bio.length}/150</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ProfilePage() {
   const router = useRouter();
   const [modal, setModal] = useState<ModalType>(null);
+  const [profile, setProfile] = useState(initialProfile);
 
   const stats = [
-    { label: "팔로잉", value: "6명", key: "following" as ModalType },
-    { label: "팔로워", value: "6명", key: "followers" as ModalType },
+    { label: "팔로잉", value: "6명",   key: "following" as ModalType },
+    { label: "팔로워", value: "6명",   key: "followers" as ModalType },
     { label: "게시글", value: "158개", key: null },
   ];
 
@@ -126,15 +196,8 @@ export default function ProfilePage() {
         <div className="screen-head">
           <StatusBar />
           <header className="topbar">
-            <Link href="/feed" className="ibtn" aria-label="뒤로">
-              <BackIcon />
-            </Link>
-            <button
-              type="button"
-              className="ibtn"
-              aria-label="설정"
-              onClick={() => router.push("/settings")}
-            >
+            <Link href="/feed" className="ibtn" aria-label="뒤로"><BackIcon /></Link>
+            <button type="button" className="ibtn" aria-label="설정" onClick={() => router.push("/settings")}>
               <SettingsIcon />
             </button>
           </header>
@@ -145,8 +208,8 @@ export default function ProfilePage() {
             <div className="profile-row">
               <div className="profile-av" />
               <div>
-                <h1 className="profile-name">홍길동</h1>
-                <p className="profile-handle">@user-123</p>
+                <h1 className="profile-name">{profile.name}</h1>
+                <p className="profile-handle">{profile.handle}</p>
                 <ul className="profile-stats">
                   {stats.map(({ label, value, key }) => (
                     <li key={label}>
@@ -156,23 +219,22 @@ export default function ProfilePage() {
                         onClick={() => key && setModal(key)}
                         style={key ? undefined : { cursor: "default" }}
                       >
-                        <p className="stat__label">{label}</p>
                         <p className="stat__value">{value}</p>
+                        <p className="stat__label">{label}</p>
                       </button>
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
-            <p className="profile-bio">
-              읽는 것과 쓰는 것 사이 어딘가에서 삽니다.<br />
-              좋아하는 작가: 김승옥, 이상, 박완서.
-            </p>
+            <p className="profile-bio" style={{ whiteSpace: "pre-line" }}>{profile.bio}</p>
             <div className="profile-btns">
-              <Link href="/my-posts" className="btn-profile-edit">
-                나의 글 보기
-              </Link>
-              <button type="button" className="btn-profile-edit btn-profile-edit--outline">
+              <Link href="/my-posts" className="btn-profile-edit">나의 글 보기</Link>
+              <button
+                type="button"
+                className="btn-profile-edit btn-profile-edit--outline"
+                onClick={() => setModal("edit")}
+              >
                 프로필 편집
               </button>
             </div>
@@ -186,16 +248,15 @@ export default function ProfilePage() {
         <BottomNav current="profile" />
 
         {modal === "following" && (
-          <UserModal
-            title="팔로잉"
-            list={followingList}
-            onClose={() => setModal(null)}
-          />
+          <UserModal title="팔로잉" list={followingList} onClose={() => setModal(null)} />
         )}
         {modal === "followers" && (
-          <UserModal
-            title="팔로워"
-            list={followerList}
+          <UserModal title="팔로워" list={followerList} onClose={() => setModal(null)} />
+        )}
+        {modal === "edit" && (
+          <EditModal
+            profile={profile}
+            onSave={(p) => setProfile(p)}
             onClose={() => setModal(null)}
           />
         )}

@@ -48,8 +48,18 @@ export default function ViewerPage() {
 
         <div className="screen-body" style={bright ? { filter: "brightness(1.15)" } : undefined}>
           <div className="viewer-head">
-            <h1 className="viewer-h1">『무진기행』 감상문</h1>
-            <span className="viewer-author">홍길동</span>
+            <div style={{ flex: 1 }}>
+              <h1 className="viewer-h1">『무진기행』 감상문</h1>
+              <div className="viewer-meta">
+                <div className="viewer-av" />
+                <span className="viewer-author">홍길동</span>
+                <span className="viewer-dot">·</span>
+                <span className="viewer-likes-inline">
+                  <HeartIcon filled={liked} />
+                  <span>{likes}</span>
+                </span>
+              </div>
+            </div>
           </div>
 
           <div className="viewer-body">
