@@ -1,9 +1,13 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { AppFrame } from "@/components/app-frame";
 import { StatusBar } from "@/components/status-bar";
 import { BottomNav } from "@/components/bottom-nav";
 import { PostCard } from "@/components/post-card";
-import { BackIcon, SettingsIcon } from "@/components/icons";
+import { BackIcon, SettingsIcon, SearchIcon } from "@/components/icons";
 
 const posts = [
   {
@@ -16,7 +20,106 @@ const posts = [
   },
 ];
 
+const followingList = [
+  { id: "f1", name: "김서연", handle: "@seo.reads", following: true },
+  { id: "f2", name: "이준혁", handle: "@joon.thinks", following: true },
+  { id: "f3", name: "박지은", handle: "@jieun_writes", following: false },
+  { id: "f4", name: "최민준", handle: "@minjun_book", following: true },
+  { id: "f5", name: "정수아", handle: "@sua_pages", following: true },
+  { id: "f6", name: "한예슬", handle: "@yeseul_reads", following: false },
+];
+
+const followerList = [
+  { id: "r1", name: "김서연", handle: "@seo.reads", following: true },
+  { id: "r2", name: "박지은", handle: "@jieun_writes", following: false },
+  { id: "r3", name: "오태양", handle: "@taeyang_o", following: false },
+  { id: "r4", name: "이준혁", handle: "@joon.thinks", following: true },
+  { id: "r5", name: "강민서", handle: "@minseo_k", following: false },
+  { id: "r6", name: "윤채원", handle: "@chaewon_y", following: false },
+];
+
+type UserItem = typeof followingList[0];
+type ModalType = "following" | "followers" | null;
+
+function UserRow({ name, handle, following: initFollowing }: UserItem) {
+  const [following, setFollowing] = useState(initFollowing);
+  return (
+    <div className="user-row">
+      <div className="user-av" />
+      <div className="user-info">
+        <p className="user-name">{name}</p>
+        <p className="user-handle">{handle}</p>
+      </div>
+      <button
+        type="button"
+        className={`follow-btn${following ? " follow-btn--on" : ""}`}
+        onClick={() => setFollowing((v) => !v)}
+      >
+        {following ? "팔로잉" : "팔로우"}
+      </button>
+    </div>
+  );
+}
+
+function UserModal({
+  title,
+  list,
+  onClose,
+}: {
+  title: string;
+  list: UserItem[];
+  onClose: () => void;
+}) {
+  const [query, setQuery] = useState("");
+  const filtered = list.filter(
+    (u) =>
+      u.name.includes(query) || u.handle.toLowerCase().includes(query.toLowerCase())
+  );
+  return (
+    <div className="umodal-overlay" onClick={onClose}>
+      <div className="umodal" onClick={(e) => e.stopPropagation()}>
+        {/* Header */}
+        <div className="umodal-head">
+          <div className="sheet-handle" />
+          <div className="umodal-title-row">
+            <span className="umodal-title">{title}</span>
+            <button type="button" className="umodal-close" onClick={onClose} aria-label="닫기">✕</button>
+          </div>
+          {/* Search */}
+          <div className="search-bar" style={{ margin: "0 16px 12px" }}>
+            <SearchIcon />
+            <input
+              className="search-input"
+              placeholder="검색"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              autoFocus
+            />
+          </div>
+        </div>
+        {/* List */}
+        <div className="umodal-list">
+          {filtered.length === 0 ? (
+            <p className="search-empty" style={{ paddingTop: 32 }}>검색 결과가 없습니다.</p>
+          ) : (
+            filtered.map((u) => <UserRow key={u.id} {...u} />)
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ProfilePage() {
+  const router = useRouter();
+  const [modal, setModal] = useState<ModalType>(null);
+
+  const stats = [
+    { label: "팔로잉", value: "6명", key: "following" as ModalType },
+    { label: "팔로워", value: "6명", key: "followers" as ModalType },
+    { label: "게시글", value: "158개", key: null },
+  ];
+
   return (
     <AppFrame>
       <div className="screen">
@@ -26,53 +129,76 @@ export default function ProfilePage() {
             <Link href="/feed" className="ibtn" aria-label="뒤로">
               <BackIcon />
             </Link>
-            <Link href="/feed" className="ibtn" aria-label="설정">
+            <button
+              type="button"
+              className="ibtn"
+              aria-label="설정"
+              onClick={() => router.push("/settings")}
+            >
               <SettingsIcon />
-            </Link>
+            </button>
           </header>
         </div>
 
         <div className="screen-body">
-        <section className="profile-hero">
-          <div className="profile-row">
-            <div className="profile-av" />
-            <div>
-              <h1 className="profile-name">홍길동</h1>
-              <p className="profile-handle">@user-123</p>
-              <ul className="profile-stats">
-                {[
-                  { label: "팔로잉", value: "6명" },
-                  { label: "팔로워", value: "6명" },
-                  { label: "게시글", value: "158개" },
-                ].map(({ label, value }) => (
-                  <li key={label}>
-                    <p className="stat__label">{label}</p>
-                    <p className="stat__value">{value}</p>
-                  </li>
-                ))}
-              </ul>
+          <section className="profile-hero">
+            <div className="profile-row">
+              <div className="profile-av" />
+              <div>
+                <h1 className="profile-name">홍길동</h1>
+                <p className="profile-handle">@user-123</p>
+                <ul className="profile-stats">
+                  {stats.map(({ label, value, key }) => (
+                    <li key={label}>
+                      <button
+                        type="button"
+                        className="stat-btn"
+                        onClick={() => key && setModal(key)}
+                        style={key ? undefined : { cursor: "default" }}
+                      >
+                        <p className="stat__label">{label}</p>
+                        <p className="stat__value">{value}</p>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </div>
-          <p className="profile-bio">
-            읽는 것과 쓰는 것 사이 어딘가에서 삽니다.<br />
-            좋아하는 작가: 김승옥, 이상, 박완서.
-          </p>
-          <div className="profile-btns">
-            <Link href="/my-posts" className="btn-profile-edit">
-              나의 글 보기
-            </Link>
-            <button type="button" className="btn-profile-edit" style={{ marginTop: 8, background: "#000" }}>
-              프로필 편집
-            </button>
-          </div>
-        </section>
+            <p className="profile-bio">
+              읽는 것과 쓰는 것 사이 어딘가에서 삽니다.<br />
+              좋아하는 작가: 김승옥, 이상, 박완서.
+            </p>
+            <div className="profile-btns">
+              <Link href="/my-posts" className="btn-profile-edit">
+                나의 글 보기
+              </Link>
+              <button type="button" className="btn-profile-edit btn-profile-edit--outline">
+                프로필 편집
+              </button>
+            </div>
+          </section>
 
-        <div className="profile-posts">
-          {posts.map((p) => <PostCard key={p.id} {...p} />)}
+          <div className="profile-posts">
+            {posts.map((p) => <PostCard key={p.id} {...p} />)}
+          </div>
         </div>
-        </div>{/* end screen-body */}
 
         <BottomNav current="profile" />
+
+        {modal === "following" && (
+          <UserModal
+            title="팔로잉"
+            list={followingList}
+            onClose={() => setModal(null)}
+          />
+        )}
+        {modal === "followers" && (
+          <UserModal
+            title="팔로워"
+            list={followerList}
+            onClose={() => setModal(null)}
+          />
+        )}
       </div>
     </AppFrame>
   );

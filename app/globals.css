@@ -1097,6 +1097,185 @@ button { font: inherit; cursor: pointer; border: 0; padding: 0; background: tran
   padding-top: 12px;
 }
 
+/* ── Profile stats clickable ── */
+.stat-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  padding: 4px 6px;
+  border-radius: 8px;
+  transition: background 0.12s;
+}
+.stat-btn:active { background: rgba(0,0,0,0.06); }
+
+/* ── User list modal (followers / following) ── */
+.umodal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 400;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.umodal {
+  background: var(--c-bg);
+  border-radius: 20px 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 85%;
+  animation: sheet-up 0.22s ease;
+}
+
+.umodal-head {
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.umodal-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 4px 16px 14px;
+}
+
+.umodal-title {
+  font-family: var(--f-ui);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--c-text);
+}
+
+.umodal-close {
+  position: absolute;
+  right: 12px;
+  top: 0;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  color: var(--c-dim);
+  background: none;
+}
+
+.umodal-list {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+  padding: 8px 0 24px;
+}
+
+.user-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+}
+
+.user-av {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #d4d4d4;
+  flex-shrink: 0;
+}
+
+.user-info { flex: 1; min-width: 0; }
+.user-name { font-family: var(--f-ui); font-size: 0.9rem; font-weight: 600; color: var(--c-text); }
+.user-handle { font-family: var(--f-ui); font-size: 0.8rem; color: var(--c-dim); margin-top: 1px; }
+
+.follow-btn {
+  flex-shrink: 0;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 8px;
+  background: var(--c-accent);
+  color: #fff;
+  font-family: var(--f-ui);
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: opacity 0.1s;
+}
+.follow-btn:active { opacity: 0.8; }
+.follow-btn--on {
+  background: var(--c-card);
+  color: var(--c-text);
+  border: 1px solid var(--c-border);
+}
+
+/* ── Profile button variant ── */
+.btn-profile-edit--outline {
+  background: transparent;
+  color: var(--c-text);
+  border: 1.5px solid var(--c-border);
+  margin-top: 8px;
+}
+
+/* ── Settings page ── */
+.settings-section { padding: 20px var(--pad) 0; }
+
+.settings-heading {
+  font-family: var(--f-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--c-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+
+.settings-group {
+  background: var(--c-card);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  width: 100%;
+  background: var(--c-card);
+  text-align: left;
+}
+
+.settings-row--danger { cursor: pointer; }
+.settings-row--danger:active { background: #fff0f0; }
+
+.settings-row__left { display: flex; flex-direction: column; gap: 2px; }
+.settings-row__label { font-family: var(--f-ui); font-size: 0.93rem; color: var(--c-text); }
+.settings-row__sub { font-family: var(--f-ui); font-size: 0.8rem; color: var(--c-dim); }
+.settings-row__chevron { font-size: 1.2rem; color: var(--c-dim); line-height: 1; }
+
+/* Toggle switch */
+.toggle {
+  width: 46px;
+  height: 26px;
+  border-radius: 13px;
+  background: #ccc;
+  position: relative;
+  flex-shrink: 0;
+  transition: background 0.18s;
+}
+.toggle--on { background: var(--c-accent); }
+.toggle__thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  transition: left 0.18s;
+}
+.toggle--on .toggle__thumb { left: 23px; }
+
 /* ── Responsive ── */
 @media (max-width: 460px) {
   .shell { padding: 0; background: var(--c-bg); }
