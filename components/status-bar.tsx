@@ -1,12 +1,6 @@
-export function StatusBar({ dark = false }: { dark?: boolean }) {
-  return (
-    <div className={`sbar${dark ? " sbar--dark" : ""}`} aria-hidden="true">
-      <span className="sbar__time">9:41</span>
-      <div className="sbar__icons">
-        <span className="sig"><i /><i /><i /></span>
-        <span className="wifi" />
-        <span className="batt"><span /></span>
-      </div>
-    </div>
-  );
+// On real devices the OS draws the status bar.
+// This component only adds safe-area-inset-top spacing so content
+// doesn't overlap the notch / Dynamic Island on iOS.
+export function StatusBar({ dark: _dark = false }: { dark?: boolean }) {
+  return <div className="sbar" aria-hidden="true" />;
 }

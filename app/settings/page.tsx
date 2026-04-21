@@ -5,13 +5,15 @@ import { useRouter } from "next/navigation";
 import { AppFrame } from "@/components/app-frame";
 import { StatusBar } from "@/components/status-bar";
 import { BackIcon } from "@/components/icons";
+import { useTheme } from "@/components/theme-provider";
 
-type ToggleKey = "push" | "email" | "like" | "follow" | "darkMode";
+type NotifKey = "push" | "email" | "like" | "follow";
 
 type SettingsItem =
   | { label: string; type: "nav"; sub?: string; key?: undefined }
   | { label: string; type: "info"; sub: string; key?: undefined }
-  | { label: string; type: "toggle"; key: ToggleKey; sub?: undefined };
+  | { label: string; type: "darkMode"; key?: undefined; sub?: undefined }
+  | { label: string; type: "notif"; key: NotifKey; sub?: undefined };
 
 const sections: { heading: string; items: SettingsItem[] }[] = [
   {
@@ -25,16 +27,16 @@ const sections: { heading: string; items: SettingsItem[] }[] = [
   {
     heading: "알림",
     items: [
-      { label: "푸시 알림", type: "toggle", key: "push" },
-      { label: "이메일 알림", type: "toggle", key: "email" },
-      { label: "좋아요 알림", type: "toggle", key: "like" },
-      { label: "팔로우 알림", type: "toggle", key: "follow" },
+      { label: "푸시 알림", type: "notif", key: "push" },
+      { label: "이메일 알림", type: "notif", key: "email" },
+      { label: "좋아요 알림", type: "notif", key: "like" },
+      { label: "팔로우 알림", type: "notif", key: "follow" },
     ],
   },
   {
     heading: "화면",
     items: [
-      { label: "다크 모드", type: "toggle", key: "darkMode" },
+      { label: "다크 모드", type: "darkMode" },
       { label: "글자 크기", type: "nav", sub: "보통" },
     ],
   },
@@ -51,16 +53,27 @@ const sections: { heading: string; items: SettingsItem[] }[] = [
 
 export default function SettingsPage() {
   const router = useRouter();
-  const [toggles, setToggles] = useState<Record<ToggleKey, boolean>>({
+  const { theme, toggle: toggleDark } = useTheme();
+  const [notifs, setNotifs] = useState<Record<NotifKey, boolean>>({
     push: true,
     email: false,
     like: true,
     follow: true,
-    darkMode: false,
   });
 
-  function flip(key: ToggleKey) {
-    setToggles((prev) => ({ ...prev, [key]: !prev[key] }));
+  function flipNotif(key: NotifKey) {
+    setNotifs((prev) => ({ ...prev, [key]: !prev[key] }));
+  }
+
+  function isOn(item: SettingsItem): boolean {
+    if (item.type === "darkMode") return theme === "dark";
+    if (item.type === "notif") return notifs[item.key];
+    return false;
+  }
+
+  function handleToggle(item: SettingsItem) {
+    if (item.type === "darkMode") toggleDark();
+    else if (item.type === "notif") flipNotif(item.key);
   }
 
   return (
@@ -92,13 +105,13 @@ export default function SettingsPage() {
                       <p className="settings-row__label">{item.label}</p>
                       {item.sub && <p className="settings-row__sub">{item.sub}</p>}
                     </div>
-                    {item.type === "toggle" && item.key && (
+                    {(item.type === "darkMode" || item.type === "notif") && (
                       <button
                         type="button"
                         role="switch"
-                        aria-checked={toggles[item.key]}
-                        className={`toggle${toggles[item.key] ? " toggle--on" : ""}`}
-                        onClick={() => flip(item.key!)}
+                        aria-checked={isOn(item)}
+                        className={`toggle${isOn(item) ? " toggle--on" : ""}`}
+                        onClick={() => handleToggle(item)}
                       >
                         <span className="toggle__thumb" />
                       </button>
@@ -113,9 +126,9 @@ export default function SettingsPage() {
           ))}
 
           {/* 로그아웃 */}
-          <div className="settings-section">
+          <div className="settings-section" style={{ paddingBottom: 24 }}>
             <div className="settings-group">
-              <button type="button" className="settings-row settings-row--danger">
+              <button type="button" className="settings-row settings-row--danger" style={{ width: "100%" }}>
                 <p className="settings-row__label" style={{ color: "#e53535" }}>로그아웃</p>
               </button>
               <div className="settings-row" style={{ borderTop: "1px solid var(--c-border)" }}>

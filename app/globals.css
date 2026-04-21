@@ -28,11 +28,26 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+/* ── Dark mode overrides ── */
+html.dark {
+  --c-bg:     #111111;
+  --c-card:   #1c1c1e;
+  --c-text:   #f0ede8;
+  --c-dim:    #9b9b9b;
+  --c-muted:  #666666;
+  --c-btn:    #2a2a2a;
+  --c-sep:    #3a3a3c;
+  --c-border: rgba(255,255,255,0.09);
+  --c-dark:   #f0ede8;
+}
+
 html, body {
   margin: 0;
-  background: #111;
+  height: 100%;
+  background: var(--c-bg);
   font-family: var(--f-ui);
   -webkit-font-smoothing: antialiased;
+  overflow: hidden;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -164,11 +179,8 @@ button { font: inherit; cursor: pointer; border: 0; padding: 0; background: tran
 
 /* ── Status Bar ── */
 .sbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 54px;
-  padding: 8px 22px 0;
+  /* Safe area spacer — OS draws the real status bar on device */
+  height: env(safe-area-inset-top, 0px);
   flex-shrink: 0;
 }
 
@@ -247,8 +259,8 @@ button { font: inherit; cursor: pointer; border: 0; padding: 0; background: tran
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  height: var(--nav-h); /* 90px — Figma: Frame 58 */
-  background: var(--c-bg);
+  /* Height = icon row + safe area (home indicator on iOS / nav bar on Android) */
+  background: var(--c-card);
   border-top: 1px solid var(--c-border);
   z-index: 50;
 }
@@ -262,19 +274,9 @@ button { font: inherit; cursor: pointer; border: 0; padding: 0; background: tran
 }
 
 .bnav__home-indicator {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.bnav__home-indicator::after {
-  content: "";
-  width: 144px;
-  height: 5px;
-  background: #000;
-  border-radius: 3px;
-  opacity: 0.2;
+  /* Fills the iOS home indicator / Android nav bar safe area */
+  height: env(safe-area-inset-bottom, 0px);
+  background: var(--c-card);
 }
 
 .bnav__item {
@@ -282,7 +284,9 @@ button { font: inherit; cursor: pointer; border: 0; padding: 0; background: tran
   place-items: center;
   height: 48px;
   width: 100%;
+  color: var(--c-text);
 }
+/* Dark mode: inactive nav icons lighten automatically via var(--c-text) */
 
 .bnav__wrap {
   display: grid;
@@ -294,7 +298,7 @@ button { font: inherit; cursor: pointer; border: 0; padding: 0; background: tran
 }
 
 .bnav__item.active .bnav__wrap {
-  background: #1a1a1a;
+  background: var(--c-text);
 }
 
 .bnav__avatar {
@@ -307,7 +311,7 @@ button { font: inherit; cursor: pointer; border: 0; padding: 0; background: tran
 }
 
 .bnav__item.active .bnav__avatar {
-  border-color: #1a1a1a;
+  border-color: var(--c-text);
 }
 
 /* ── Screen ── */
@@ -317,6 +321,9 @@ button { font: inherit; cursor: pointer; border: 0; padding: 0; background: tran
   flex-direction: column;
   overflow: hidden;
   position: relative;
+  height: 100dvh;
+  background: var(--c-bg);
+  color: var(--c-text);
   background: var(--c-bg);
   min-height: 0;
 }
@@ -878,8 +885,8 @@ button { font: inherit; cursor: pointer; border: 0; padding: 0; background: tran
   width: 100%;
   height: 50px;
   border-radius: var(--r);
-  background: #1a1a1a;
-  color: #fff;
+  background: var(--c-text);
+  color: var(--c-bg);
   font-family: var(--f-ui);
   font-size: 0.94rem;
   font-weight: 600;

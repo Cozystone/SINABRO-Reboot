@@ -1,6 +1,6 @@
 /* ── Navigation ── */
 export function BookIcon({ active = false }: { active?: boolean }) {
-  const c = active ? "#fff" : "#323232";
+  const c = active ? "var(--c-bg)" : "currentColor";
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
       <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke={c} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -10,7 +10,7 @@ export function BookIcon({ active = false }: { active?: boolean }) {
 }
 
 export function SearchNavIcon({ active = false }: { active?: boolean }) {
-  const c = active ? "#fff" : "#323232";
+  const c = active ? "var(--c-bg)" : "currentColor";
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
       <circle cx="10.5" cy="10.5" r="5.5" stroke={c} strokeWidth="1.8" />
@@ -20,7 +20,7 @@ export function SearchNavIcon({ active = false }: { active?: boolean }) {
 }
 
 export function PenIcon({ active = false }: { active?: boolean }) {
-  const c = active ? "#fff" : "#323232";
+  const c = active ? "var(--c-bg)" : "currentColor";
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
       <path d="M12 5l6 6-8.5 8.5L4 20l.5-5.5L12 5z" stroke={c} strokeWidth="1.7" strokeLinejoin="round" />
@@ -30,7 +30,7 @@ export function PenIcon({ active = false }: { active?: boolean }) {
 }
 
 export function BellIcon({ active = false }: { active?: boolean }) {
-  const c = active ? "#fff" : "#323232";
+  const c = active ? "var(--c-bg)" : "currentColor";
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
       <path d="M8 17s0 3 4 3 4-3 4-3" stroke={c} strokeWidth="1.7" strokeLinecap="round" />
